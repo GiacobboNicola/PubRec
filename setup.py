@@ -1,16 +1,24 @@
-import setuptools
+from distutils.core import setup
 
-setuptools.setup(
-    name="pubrec",
-    version="1.0",
-    author="Nicola Giacobbo",
-    author_email="giacobbo.nicola@gmail.com",
-    description="Count citations of paper available in ADS archive",
-    packages=setuptools.find_packages(),
-    classifiers=[
-        "Programming Languages :: Python :: 3",
-        "License :: OIS Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
-    python_requires='>=3.6',
+setup(
+  name = 'PubRec',         
+  packages = ['pubrec'],   
+  version = '1.0',      
+  license='MIT',  
+  description = 'Simple python module to get the number of citations of a paper (or list of papers)',
+  author = 'Nicola Giacobbo',
+  author_email = 'giacobbo.nicola@gmail.com', 
+  url = 'https://github.com/GiacobboNicola/PubRec',   
+  download_url = 'https://github.com/GiacobboNicola/PubRec/archive/main.zip', 
+  keywords = ['ADS', 'citations'],   
+  install_requires=[        
+          'bs4',
+          'tqdm',
+          'argaparse'
+      ],
+  classifiers=[
+    'Development Status :: 5 - Production/Stable',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3',
+  ],
 )
