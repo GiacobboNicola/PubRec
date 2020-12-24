@@ -9,7 +9,7 @@ setup(
   author = 'Nicola Giacobbo',
   author_email = 'giacobbo.nicola@gmail.com', 
   url = 'https://github.com/GiacobboNicola/PubRec',   
-  download_url = 'https://github.com/GiacobboNicola/PubRec/archive/main.zip', 
+  download_url = 'https://github.com/GiacobboNicola/PubRec/archive/v1.0.tar.gz', 
   keywords = ['ADS', 'citations'],   
   install_requires=[        
           'bs4',
@@ -21,4 +21,4 @@ setup(
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3',
   ],
-)
+)    
