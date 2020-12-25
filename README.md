@@ -8,3 +8,8 @@ Here a couple of examples:
 `python pubrec.py --file example.txt`
 * get the citations from individual bibcodes:  
 `python pubrec.py --single 2019MNRAS.482.2234G 2018MNRAS.480.2011G`
+
+### Soon on this screens...
+* pip installation available
+* new features
+* and much more
