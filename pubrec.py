@@ -1,13 +1,14 @@
+#!/usr/bin/env python
 """
-================================ PubRec ================================
-Simple python module to query the ADS databases and:
-1) get the numbers of citations of a paper (or list of papers) as 
-    well as the list of authors;
+================================= PubRec =================================
+Simple python module to query the ADS databases and obtain for a given 
+paper (or list of papers) the number of citations and the list of authors.
 
 This idea is inspired by filltex (https://github.com/dgerosa/filltex) 
 developed by Davide Gerosa.
 
-Usage: python pubrec.py --list file_with_list_of_bibcodes.txt
+Usage from cmd line: python pubrec.py --list file_with_list_of_bibcodes.txt
+===========================================================================
 """
 
 from __future__ import absolute_import, print_function
@@ -53,7 +54,7 @@ def get_authors(ads_id):
 
 
 def arguments_parser():
-    """Define some useful options"""
+    """Define some useful options to use pubrec from cmd line"""
     parser = argparse.ArgumentParser(prog='PubRec')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-s','--single', action='extend', nargs='+', dest='ids',
@@ -78,7 +79,7 @@ def main(ids, filename):
 
     if ids is not None:
         tot_citations = 0
-        for bib in tqdm(args.ids):
+        for bib in tqdm(ids):
             tot_citations += int(get_citations(bib)['Total citations'])
 
     return tot_citations
