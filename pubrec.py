@@ -59,28 +59,53 @@ def arguments_parser():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-s','--single', action='extend', nargs='+', dest='ids',
             metavar='ID', help='ID(s) of the paper(s) in ADS')
-    group.add_argument('-f', '--file', type=str, dest='filename',
-            metavar='FILE', help='read a list of bibitems (one per row) from FILE'),
-    parser.add_argument('-v','--version', action='version', version='%(prog)s 1.0')
+    group.add_argument('-i', '--infile', type=str, dest='infile', metavar='INFILE',
+            default='example.txt', help='read a list of bibitems (one per row) from INFILE'),
+    parser.add_argument('--outfile', '-o', dest='outfile', metavar='OUTFILE',
+            default='output.txt' ,help='save the inforformation on a file')
+    parser.add_argument('--verbose', '-v', action='count', default=0,
+            help='definy the level of verbosity [%(default)s]')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
 
     return parser
 
 
-def main(ids, filename):
-    if filename is not None:
-        with open(filename, 'r') as f:
+def main(ids, infile, outfile, verbose):
+
+    #-- check for the --outfile option
+    if outfile:
+        of = open(outfile, 'w')
+        of.write('----------------------------\n')
+        of.write('ID \t \t citations\n')
+        of.write('----------------------------\n')
+
+    #-- check for --infile option
+    if infile is not None:
+        with open(infile, 'r') as f:
             bibcodes = f.read().splitlines()
 
             print('List of bibcodes: {}'.format(bibcodes))
 
-            tot_citations = 0
-            for bib in tqdm(bibcodes):
-                tot_citations += int(get_citations(bib)['Total citations'])
+    #-- check for --single option
+    elif ids is not None:
+        bibcodes = ids
 
-    if ids is not None:
-        tot_citations = 0
-        for bib in tqdm(ids):
-            tot_citations += int(get_citations(bib)['Total citations'])
+    #-- loop over all bibcodes
+    tot_citations = 0
+    for bib in tqdm(bibcodes):
+        cit = int(get_citations(bib)['Total citations'])
+        if verbose > 0:
+            print('code: {}\t cits: {}'.format(bib,cit))
+        if outfile:
+            of.write(bib+'\t'+str(cit)+'\n')
+        
+        tot_citations += cit
+
+    if outfile:
+        of.write('----------------------------\n')
+        of.write('Tot. cit. \t'+str(cit)+'\n')
+        of.write('----------------------------\n')
+        of.close()
 
     return tot_citations
 
