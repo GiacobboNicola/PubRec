@@ -22,6 +22,15 @@ if sys.version_info.major>=3:
 else:
     import urllib
 
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def get_citations(ads_id):
     """This function returns the number of citations to a single entry in ADS"""
@@ -61,8 +70,8 @@ def arguments_parser():
             metavar='ID', help='ID(s) of the paper(s) in ADS')
     group.add_argument('-i', '--infile', type=str, dest='infile', metavar='INFILE',
             default='example.txt', help='read a list of bibitems (one per row) from INFILE'),
-    parser.add_argument('--outfile', '-o', dest='outfile', metavar='OUTFILE',
-            default='output.txt' ,help='save the inforformation on a file')
+    parser.add_argument('--outfile', '-o', type=str2bool, nargs='?', dest='outfile', metavar='OUTFILE',
+            default=True, help='save the inforformation on a file')
     parser.add_argument('--verbose', '-v', action='count', default=0,
             help='definy the level of verbosity [%(default)s]')
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
@@ -74,7 +83,7 @@ def main(ids, infile, outfile, verbose):
 
     #-- check for the --outfile option
     if outfile:
-        of = open(outfile, 'w')
+        of = open('log.txt', 'w')
         of.write('----------------------------\n')
         of.write('ID \t \t citations\n')
         of.write('----------------------------\n')
@@ -103,7 +112,7 @@ def main(ids, infile, outfile, verbose):
 
     if outfile:
         of.write('----------------------------\n')
-        of.write('Tot. cit. \t'+str(cit)+'\n')
+        of.write('Tot. cit. \t'+str(tot_citations)+'\n')
         of.write('----------------------------\n')
         of.close()
 
