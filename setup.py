@@ -12,7 +12,7 @@ setup(
   author = 'Nicola Giacobbo',
   author_email = 'giacobbo.nicola@gmail.com', 
   url = 'https://github.com/GiacobboNicola/PubRec',   
-  #download_url = 'https://github.com/GiacobboNicola/PubRec/archive/v1.0.tar.gz', 
+  download_url = 'https://github.com/GiacobboNicola/PubRec/archive/v1.0.tar.gz', 
   keywords = ['ADS', 'citations'],
   py_modules = ['pubrec'],
   scripts = ['bin/pubrec'],
