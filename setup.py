@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
   name = 'PubRec',
-  version = '0.b',      
+  version = '1.0',      
   license ='MIT',  
   description = 'Simple python module to get the number of citations of a paper (or list of papers)',
   long_description='See the github `repository <https://github.com/GiacobboNicola/PubRec>`_.',
