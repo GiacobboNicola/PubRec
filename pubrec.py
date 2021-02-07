@@ -66,23 +66,23 @@ def arguments_parser():
     """Define some useful options to use pubrec from cmd line"""
     parser = argparse.ArgumentParser(prog='PubRec')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-s','--single', action='extend', nargs='+', dest='ids',
+    group.add_argument('-s','--single', nargs='+', dest='ids',
             metavar='ID', help='ID(s) of the paper(s) in ADS')
-    group.add_argument('-i', '--infile', type=str, dest='infile', metavar='INFILE',
-            default='example.txt', help='read a list of bibitems (one per row) from INFILE'),
-    parser.add_argument('--outfile', '-o', type=str2bool, nargs='?', dest='outfile', metavar='OUTFILE',
-            default=True, help='save the inforformation on a file')
+    group.add_argument('-f', '--file', type=str, dest='infile', metavar='FILE',
+            help='read a list of bibitems (one per row) from FILE'),
+    parser.add_argument('-l', '--log', dest='log', action = 'store_true', 
+            help='enable save the inforformation on a log file')
     parser.add_argument('--verbose', '-v', action='count', default=0,
             help='definy the level of verbosity [%(default)s]')
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0.1')
 
     return parser
 
 
-def main(ids, infile, outfile, verbose):
+def main(ids, infile, log, verbose):
 
     #-- check for the --outfile option
-    if outfile:
+    if log:
         of = open('log.txt', 'w')
         of.write('----------------------------\n')
         of.write('ID \t \t citations\n')
@@ -105,12 +105,12 @@ def main(ids, infile, outfile, verbose):
         cit = int(get_citations(bib)['Total citations'])
         if verbose > 0:
             print('code: {}\t cits: {}'.format(bib,cit))
-        if outfile:
+        if log:
             of.write(bib+'\t'+str(cit)+'\n')
         
         tot_citations += cit
 
-    if outfile:
+    if log:
         of.write('----------------------------\n')
         of.write('Tot. cit. \t'+str(tot_citations)+'\n')
         of.write('----------------------------\n')
