@@ -49,6 +49,9 @@ def get_citations(ads_id):
             for tr in tbody.find_all("tr")] 
     #-- transform list in dictionary
     dictCits = dict(table)
+    #-- In the case there are no citations
+    if 'Total citations' not in dictCits.keys():
+        dictCits['Total citations'] = 0
     return dictCits
 
 
@@ -93,7 +96,8 @@ def main(ids, infile, log, verbose):
         with open(infile, 'r') as f:
             bibcodes = f.read().splitlines()
 
-            print('List of bibcodes: {}'.format(bibcodes))
+            if verbose > 0:
+                print('List of bibcodes: {}'.format(bibcodes))
 
     #-- check for --single option
     elif ids is not None:
